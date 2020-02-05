@@ -51,4 +51,15 @@ To work with *git* you should to use [Github client](https://desktop.github.com/
 
 - [Online C++ Benchmark](http://quick-bench.com/)
 
+- [Jetbrain Student License](https://www.jetbrains.com/shop/eform/students)
+
+- [MinGW]()
+
+- [Cygwin]()
+
   
+
+## Issues
+
+- [How to setup Git in CLion](https://stackoverflow.com/questions/35087523/git-exe-error-while-loading-shared-libraries-cannot-open-shared-object-file)
+- 
