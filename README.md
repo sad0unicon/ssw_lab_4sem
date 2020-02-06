@@ -35,7 +35,7 @@ To work with *git* you should to use [Github client](https://desktop.github.com/
 
 
 
-## Usefull
+## Useful
 
 - [Git How To](https://githowto.com/ru/setup)
 
@@ -53,13 +53,17 @@ To work with *git* you should to use [Github client](https://desktop.github.com/
 
 - [Jetbrain Student License](https://www.jetbrains.com/shop/eform/students)
 
-- [MinGW]()
+- [MinGW](http://mingw-w64.org/doku.php)
 
-- [Cygwin]()
+- [Cygwin](https://www.cygwin.com/)
+
+- [CMake](https://cmake.org/download/)
 
   
 
 ## Issues
 
 - [How to setup Git in CLion](https://stackoverflow.com/questions/35087523/git-exe-error-while-loading-shared-libraries-cannot-open-shared-object-file)
-- 
+- [How to make friends our CMake with Visual Studio](https://www.youtube.com/watch?v=gYmgbqGfv-8)
+- [How to make friends CMake and Visual Studio[2]](https://docs.microsoft.com/ru-ru/cpp/build/cmake-projects-in-visual-studio?view=vs-2019)
+

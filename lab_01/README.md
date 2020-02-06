@@ -1,24 +1,3 @@
-### Build
-
-Note: all instructions here for machine with *nix OS. For WIndows users may be need some another instructions (you can try to use *Cygwin* or just change `g++` on `mingw`)
-
-To build by make (Makefile):
-
-```bash
-$ cd <to repo path>/lab_01
-$ make
-```
-
-To build by cmake (CMakeLists.txt):
-
-```bash
-$ cd <to repo path>/lab_01
-$ cmake .
-$ make
-```
-
-
-
 ## lab_01
 
 Реализация таких линейных структур данных как: стек, очередь, вектор.
@@ -29,7 +8,9 @@ $ make
 - pop - выталкивание элемента из структуры;
 - peek - возврат вершины структуры (верхнего элемента);
 - count - возврат количества элементов в структуре;
+- at - метод произвольного доступа к элементу, реализуется только для структуры *вектор*;
 - динамический размер - размер структуры должен увеличиваться при необходимости;
+- операторы сравнения (>, <, !=, etc) - объекты структур должны поддерживать операции **лексикографического** сравнения;
 - не должны содержать в себе STL контейнеров (`std::stack, std::queue, std::vector`).
 
 ### Что Вы должны сделать:
