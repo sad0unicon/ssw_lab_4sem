@@ -1,0 +1,9 @@
+Visual Studio not found at: C:\Program Files (x86)\Microsoft Visual Studio\2017\Community Configure
+
+Cannot get compiler information:
+	Cannot load Visual C++ environment from C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat:
+	command [cmd.exe, /c, call, C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat, x86, &&, C:\Program Files\JetBrains\CLion 2019.3.4\jbr\bin\java, -cp, C:\Program Files\JetBrains\CLion 2019.3.4\lib\util.jar, com.intellij.util.ReadEnv, C:\Users\Owner\AppData\Local\Temp\intellij-cmd-env.tmp, ||, exit, /B, %ERRORLEVEL%]
+		exit code:1 text:0 out:**********************************************************************
+	** Visual Studio 2017 Developer Command Prompt v15.8.5
+	** Copyright (c) 2017 Microsoft Corporation
+	**********************************************************************
