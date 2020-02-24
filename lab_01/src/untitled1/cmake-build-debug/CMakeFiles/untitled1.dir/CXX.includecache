@@ -1,0 +1,38 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/Owner/CLionProjects/untitled1/main.cpp
+iostream
+-
+vektor.h
+C:/Users/Owner/CLionProjects/untitled1/vektor.h
+steck.h
+C:/Users/Owner/CLionProjects/untitled1/steck.h
+ochered.h
+C:/Users/Owner/CLionProjects/untitled1/ochered.h
+vector
+-
+stack
+-
+queue
+-
+chrono
+-
+
+C:/Users/Owner/CLionProjects/untitled1/ochered.h
+iostream
+-
+
+C:/Users/Owner/CLionProjects/untitled1/steck.h
+iostream
+-
+
+C:/Users/Owner/CLionProjects/untitled1/vektor.h
+iostream
+-
+
