@@ -1,0 +1,63 @@
+﻿  pch.cpp
+  laba.cpp
+c:\users\user\source\repos\laba\laba.cpp(516): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+c:\users\user\source\repos\laba\laba.cpp(517): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+c:\users\user\source\repos\laba\laba.cpp(556): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+c:\users\user\source\repos\laba\laba.cpp(557): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+c:\users\user\source\repos\laba\laba.cpp(641): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+c:\users\user\source\repos\laba\laba.cpp(642): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+c:\users\user\source\repos\laba\laba.cpp(676): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+c:\users\user\source\repos\laba\laba.cpp(677): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+c:\users\user\source\repos\laba\laba.cpp(755): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+c:\users\user\source\repos\laba\laba.cpp(756): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+c:\users\user\source\repos\laba\laba.cpp(793): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+c:\users\user\source\repos\laba\laba.cpp(795): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+  laba.vcxproj -> C:\Users\User\source\repos\laba\Debug\laba.exe
