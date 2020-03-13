@@ -9,7 +9,9 @@ Implementation of stack (LIFO)/queue(FIFO)/vector.
 
 Implementation of single/double linked list, circular buffer.  
 
+## lab_03  
 
+Implementation of general tree and binary search tree.  
 
 What we will be do:
 
@@ -63,6 +65,8 @@ To work with *git* you should to use [Github client](https://desktop.github.com/
 - [Cygwin](https://www.cygwin.com/)
 
 - [CMake](https://cmake.org/download/)
+
+- [Online BST constructor](https://www.cs.usfca.edu/~galles/visualization/BST.html)
 
   
 
