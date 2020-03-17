@@ -14,13 +14,11 @@ Implementation of single/double linked list, circular buffer.
 Implementation of general tree and binary search tree. 
 
 
-
 What we will be do:
 
 - build different structures of data;
 - compare our realization with STL;
 - ~~may be something also?~~
-
 
 
 ## How work with this repository
@@ -47,37 +45,21 @@ To work with *git* you should to use [Github client](https://desktop.github.com/
 ## Useful
 
 - [Git How To](https://githowto.com/ru/setup)
-
 - [Git Bash](https://gitforwindows.org/)
-
 - [Git Update fork](https://help.github.com/en/articles/syncing-a-fork)
-
 - [Google Code Style Guide](https://google.github.io/styleguide/cppguide.html)
-
 - [C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines)
-
 - [C++ FAQ](https://isocpp.org/faq)
-
 - [Multi language online documentation](https://docs.w3cub.com/cpp/)
-
 - [Online C++ Benchmark](http://quick-bench.com/)
-
 - [Jetbrain Student License](https://www.jetbrains.com/shop/eform/students)
-
 - [MinGW](http://mingw-w64.org/doku.php)
-
 - [Cygwin](https://www.cygwin.com/)
-
 - [CMake](https://cmake.org/download/)
-
 - [Online BST constructor](https://www.cs.usfca.edu/~galles/visualization/BST.html)
-
 - [CppCheck](http://cppcheck.sourceforge.net/)
-
 - [Valgrind](https://valgrind.org/)
-
 - [WSL](https://docs.microsoft.com/ru-ru/windows/wsl/install-win10)
-
   
 
 ## Issues
