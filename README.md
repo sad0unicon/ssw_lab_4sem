@@ -11,7 +11,7 @@ Implementation of single/double linked list, circular buffer.
 
 ## lab_03  
 
-Implementation of general tree and binary search tree.    
+Implementation of general tree and binary search tree. 
 
 
 
@@ -20,6 +20,8 @@ What we will be do:
 - build different structures of data;
 - compare our realization with STL;
 - ~~may be something also?~~
+
+
 
 ## How work with this repository
 
@@ -70,6 +72,12 @@ To work with *git* you should to use [Github client](https://desktop.github.com/
 
 - [Online BST constructor](https://www.cs.usfca.edu/~galles/visualization/BST.html)
 
+- [CppCheck](http://cppcheck.sourceforge.net/)
+
+- [Valgrind](https://valgrind.org/)
+
+- [WSL](https://docs.microsoft.com/ru-ru/windows/wsl/install-win10)
+
   
 
 ## Issues
@@ -80,3 +88,12 @@ To work with *git* you should to use [Github client](https://desktop.github.com/
 - [How to make friends our CMake with Visual Studio](https://www.youtube.com/watch?v=gYmgbqGfv-8)
 - [How to make friends CMake and Visual Studio[2]](https://docs.microsoft.com/ru-ru/cpp/build/cmake-projects-in-visual-studio?view=vs-2019)
 - [How to import CMake project in Qt Creator](https://codeyarns.com/2016/01/26/how-to-import-cmake-project-in-qt-creator/)
+
+
+
+# [Wiki](https://github.com/GOOD-Stuff/ssw_lab_4sem/wiki)
+
+- [Как сделать "форк" репозитория?](https://github.com/GOOD-Stuff/ssw_lab_4sem/wiki);
+- [А как мне обновить свой "форк"?](https://github.com/GOOD-Stuff/ssw_lab_4sem/wiki);
+- [Не могу обновить свой форк из-за конфликта](https://bit.ly/3a0WaiO);
+- [FAQ и прочее по работам](https://github.com/GOOD-Stuff/ssw_lab_4sem/wiki);
