@@ -1,11 +1,23 @@
 #ifndef LABA2_1_ONELIST_H
 #define LABA2_1_ONELIST_H
-#include <iostream>
-using namespace std;
+
 template<typename T>
 class oneList{
+private:
+    class Element {
+    public:
+        Element * next { nullptr };
+        T data { 0 };
+        Element(T data = T(), Element *next = nullptr) {
+            this->data = data;
+            this->next = next;
+        }
+    };
+    int Size;
+    Element *head;
 public:
     oneList();
+    oneList(const std::initializer_list<T> &m);
     ~oneList();
     void display();
     void push_front(T data);//добавление элемента в начало списка
@@ -21,9 +33,9 @@ public:
     void razbienie(T k, oneList<T> &m1, oneList<T> &m2);
     bool operator ==(const oneList<T> &m) {
         if (this->Size == m.Size) {
-            Element<T> *current1 = this->head;
-            Element<T> *current2 = m.head;
-            while (current1->next != nullptr) {
+            Element *current1 = this->head;
+            Element *current2 = m.head;
+            while ((current1->next != nullptr)&&(current2->next != nullptr)) {
                 if (current1->data != current2->data) return false;
                 current1 = current1->next;
                 current2 = current2->next;
@@ -39,16 +51,16 @@ public:
     };
 
     bool operator > (const oneList<T> &m) {
-        Element<T> *current1 = this->head;
-        Element<T> *current2 = m.head;
+        Element *current1 = this->head;
+        Element *current2 = m.head;
         while ((current1->next != nullptr)&&(current2->next != nullptr)){
             if (current1->data < current2->data) return false;
-            else if (current1->data > current2->data) return true;
+            if (current1->data > current2->data) return true;
             current1 = current1->next;
             current2 = current2->next;
         }
         if (current1->data < current2->data) return false;
-        else if (current1->data > current2->data) return true;
+        if (current1->data > current2->data) return true;
         return (this->Size > m.Size);
     };
 
@@ -64,20 +76,19 @@ public:
         return !(*this >= m);
     };
 
-    void clear();// очистить список
-private:
-    template<typename T>
-    class Element {
-    public:
-        Element * next;
-        T data;
-        Element(T data = T(), Element *next = nullptr) {
-            this->data = data;
-            this->next = next;
+    friend std::ostream& operator<< (std::ostream &out, const oneList<T> &m){
+        if ( m.head == nullptr ) throw std::out_of_range("List is empty");
+        Element *current = m.head;
+        out<<"( ";
+        while(current->next != nullptr){
+            out << current->data << ", ";
+            current = current->next;
         }
+        out << current->data<<" )";
+        return out;
     };
-    int Size;
-    Element<T> *head;
+    T& operator[] (int index);
+    void clear();// очистить список
 };
 
 template<typename T>
@@ -87,32 +98,39 @@ oneList<T>::oneList() {
 }
 
 template<typename T>
+oneList<T>::oneList(const std::initializer_list<T> &m) {
+    for (int i = 0; i < m.size();i++){
+        push_back(m.begin()[i]);
+    }
+}
+
+template<typename T>
 oneList<T>::~oneList() {
     clear();
 }
 
 template<typename T>
 void oneList<T>::push_front(T data) {
-    head = new Element<T>(data, head);
+    head = new Element(data, head);
     Size++;
 }
 
 template<typename T>
 void oneList<T>::push_back(T data) {
-    if (head == nullptr) head = new Element<T>(data);
+    if (head == nullptr) head = new Element(data);
     else {
-        Element<T> *current = this->head;
+        Element *current = this->head;
         while (current->next != nullptr)
             current = current->next;
-        current->next = new Element<T>(data);
+        current->next = new Element(data);
     }
     Size++;
 }
 
 template<typename T>
 void oneList<T>::pop_front() {
-    if (head == nullptr) throw std::out_of_range("list is empty");
-    Element<T> *t = head;
+    if (Size==0) throw std::out_of_range("list is empty");
+    Element *t = head;
     head = head->next;
     delete t;
     Size--;
@@ -120,19 +138,19 @@ void oneList<T>::pop_front() {
 
 template<typename T>
 void oneList<T>::pop_back() {
-    if (head == nullptr) throw std::out_of_range("list is empty");
+    if (Size==0) throw std::out_of_range("list is empty");
     erase (Size - 1);
 }
 
 template<typename T>
 void oneList<T>::insert(T data, int index) {
-    if ((index < 0)||(index >= Size)) throw std::out_of_range("index is more then size of list");
+    if ((index < 0)||(index > Size)) throw std::out_of_range("index is more then size of list or will be positive number");
     if (index == 0) push_front(data);
     else {
-        Element<T> *previous = this->head;
+        Element *previous = this->head;
         for (int i = 0; i < index - 1; i++)
             previous = previous->next;
-        Element<T> *newElement = new Element<T>(data, previous->next);
+        Element *newElement = new Element(data, previous->next);
         previous->next = newElement;
         Size++;
     }
@@ -140,13 +158,13 @@ void oneList<T>::insert(T data, int index) {
 
 template<typename T>
 void oneList<T>::erase (int index) {
-    if ((index < 0)||(index >= Size)) throw std::out_of_range("index is more then size of list");
+    if ((index < 0)||(index >= Size)) throw std::out_of_range("index is more then size of list or will be positive number");
     if (index == 0) pop_front();
     else {
-        Element<T> *previous = this->head;
+        Element *previous = this->head;
         for (int i = 0; i < index - 1; i++)
             previous = previous->next;
-        Element<T> *delElement= previous->next;
+        Element *delElement= previous->next;
         previous->next = delElement->next;
         delete delElement;
         Size--;
@@ -159,13 +177,28 @@ void oneList<T>::clear() {
         pop_front();
 }
 
+template<class T>
+T &oneList<T>::operator[](int index) {
+    if ((index >= Size) || (index < 0)) throw std::out_of_range("index is more then size of list or will be positive number");
+    int count = 0;
+    Element *current = head;
+    while (current != nullptr){
+        if (count == index){
+            return current->data;
+        }
+        current = current->next;
+        count++;
+    }
+    throw std::out_of_range("out of range");
+}
+
 template<typename T>
 T * oneList<T>::begin() {
     return &head->data;
 }
 template<typename T>
 T * oneList<T>::end() {
-    Element<T> *current = this->head;
+    Element *current = this->head;
     while (current->next != nullptr)
         current = current->next;
     return &current->data;
@@ -173,7 +206,7 @@ T * oneList<T>::end() {
 
 template<typename T>
 void oneList<T>::display() {
-    Element<T> *current = this->head;
+    Element *current = this->head;
     cout << endl;
     while (current->next != nullptr) {
         cout << current->data << " ";
@@ -184,8 +217,8 @@ void oneList<T>::display() {
 
 template<typename T>
 void oneList<T>::slijanie(oneList<T> &m,oneList<T> &m1) {
-    Element<T> *current1 = this->head;
-    Element<T> *current2 = m.head;
+    Element *current1 = this->head;
+    Element *current2 = m.head;
     while ((current1->next != nullptr)&&(current2->next != nullptr)) {
         if (current1->data <= current2->data) {
             m1.push_back(current1->data);
@@ -224,7 +257,7 @@ void oneList<T>::slijanie(oneList<T> &m,oneList<T> &m1) {
 
 template<typename T>
 void oneList<T>::razbienie(T k, oneList<T> &m1, oneList<T> &m2) {
-    Element<T> *current = this->head;
+    Element *current = this->head;
     while (current->next != nullptr) {
         if (current->data < k) m1.push_back(current->data);
         else m2.push_back(current->data);

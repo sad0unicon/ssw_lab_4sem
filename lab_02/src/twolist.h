@@ -1,11 +1,26 @@
 #ifndef LABA2_1_TWOLIST_H
 #define LABA2_1_TWOLIST_H
-#include <iostream>
-using namespace std;
+
 template <typename T>
 class twoList {
+private:
+    class Element {
+    public:
+        T data { 0 };
+        Element *Next { nullptr };
+        Element *Prev { nullptr };
+        Element (T data = T(), Element *Next = nullptr, Element *Prev = nullptr) {
+            this->data = data;
+            this->Next = Next;
+            this->Prev = Prev;
+        }
+    };
+    Element *head;
+    Element *tail;
+    int Size;
 public:
     twoList();
+    twoList(const std::initializer_list<T> &m);
     ~twoList();
     void display();
     void push_front(T data);//добавление элемента в начало списка
@@ -19,11 +34,12 @@ public:
     int count() { return Size; }// получить количество елементов в списке
     void slijanie(twoList<T> &m, twoList<T> &m1);
     void razbienie(T k, twoList<T> &m1, twoList<T> &m2);
+
     bool operator ==(const twoList<T> &m) {
         if (this->Size == m.Size) {
-            Element<T> *current1 = this->head;
-            Element<T> *current2 = m.head;
-            while (current1->Next != nullptr) {
+            Element *current1 = this->head;
+            Element *current2 = m.head;
+            while ((current1->Next != nullptr)&&(current2->Next != nullptr)) {
                 if (current1->data != current2->data) return false;
                 current1 = current1->Next;
                 current2 = current2->Next;
@@ -39,16 +55,16 @@ public:
     };
 
     bool operator > (const twoList<T> &m) {
-        Element<T> *current1 = this->head;
-        Element<T> *current2 = m.head;
+        Element *current1 = this->head;
+        Element *current2 = m.head;
         while ((current1->Next != nullptr)&&(current2->Next != nullptr)){
             if (current1->data < current2->data) return false;
-            else if (current1->data > current2->data) return true;
+            if (current1->data > current2->data) return true;
             current1 = current1->Next;
             current2 = current2->Next;
         }
         if (current1->data < current2->data) return false;
-        else if (current1->data > current2->data) return true;
+        if (current1->data > current2->data) return true;
         return (this->Size > m.Size);
     };
 
@@ -63,23 +79,20 @@ public:
     bool operator < (const twoList<T> &m) {
         return !(*this >= m);
     };
-    void clear();
-private:
-    template <typename T>
-    class Element {
-    public:
-        T data;
-        Element *Next;
-        Element *Prev;
-        Element (T data = T(), Element *Next = nullptr, Element *Prev = nullptr) {
-            this->data = data;
-            this->Next = Next;
-            this->Prev = Prev;
+
+    friend std::ostream& operator<< (std::ostream &out, const twoList<T> &m){
+        if ( m.head == nullptr ) throw std::out_of_range("List is empty");
+        Element *current = m.head;
+
+        out << "(";
+        while(current->Next != nullptr){
+            out << current->data << ", ";
+            current = current->Next;
         }
+        out << current->data << ")";
+        return out;
     };
-    Element <T> *head;
-    Element <T> *tail;
-    int Size;
+    void clear();
 };
 
 template <typename T>
@@ -89,10 +102,16 @@ twoList <T>::twoList() {
     Size = 0;
 }
 
+template<class T>
+twoList<T>::twoList(const std::initializer_list<T> &m) {
+    for (int i = 0; i < m.size();i++){
+        push_back(m.begin()[i]);
+    }
+}
+
 template <typename T>
 twoList<T>::~twoList() {
-    while (Size)
-        pop_front();
+    clear();
 }
 
 template <typename T>
@@ -103,7 +122,7 @@ void twoList<T>::clear() {
 
 template<typename T>
 void twoList<T>::display() {
-    Element <T> *print = head;
+    Element *print = head;
     while (print->Next != nullptr) {
         cout << print->data << " ";
         print = print->Next;
@@ -114,28 +133,29 @@ void twoList<T>::display() {
 template <typename T>
 void twoList <T>::push_front(T data) {
     if (Size > 0) {
-        Element <T> *temp = head;
-        head = new Element <T>(data, head);
+        Element *temp = head;
+        head = new Element (data, head);
         temp->Prev = head;
     }
-    else head = tail = new Element <T>(data, head, tail);
+    else head = tail = new Element (data, head, tail);
     Size++;
 }
 
 template <typename T>
 void twoList <T>::push_back(T data) {
     if (Size > 0) {
-        Element <T> *temp = tail;
-        tail = new Element <T>(data, nullptr, tail);
+        Element *temp = tail;
+        tail = new Element (data, nullptr, tail);
         temp->Next = tail;
     }
-    else head = tail = new Element <T>(data, head, tail);
+    else head = tail = new Element (data, head, tail);
     Size++;
 }
 
 template <typename T>
 void twoList <T>::pop_front() {
-    Element <T> *temp = head;
+    if (Size==0) throw std::out_of_range("two list is empty");
+    Element *temp = head;
     head = head->Next;
     delete temp;
     Size--;
@@ -143,7 +163,8 @@ void twoList <T>::pop_front() {
 
 template <typename T>
 void twoList <T>::pop_back() {
-    Element <T> *temp = tail;
+    if (Size==0) throw std::out_of_range("two list is empty");
+    Element *temp = tail;
     tail = tail->Prev;
     tail->Next = nullptr;
     delete temp;
@@ -152,25 +173,26 @@ void twoList <T>::pop_back() {
 
 template <typename T>
 void twoList <T>::insert(T data, int index) {
+    if ((index < 0)||(index > Size)) throw std::out_of_range("index is more then size of two list or will be positive number");
     if (index == 0) push_front(data);
-    else if (index == Size) push_back(data);
+    if (index == Size) push_back(data);
     if (index <= Size / 2) {
-        Element<T> *previous = this->head;
+        Element *previous = this->head;
         for (int i = 0; i < index - 1; i++)
             previous = previous->Next;
-        Element<T> *newElement = new Element<T>(data, previous->Next, previous);
+        Element *newElement = new Element(data, previous->Next, previous);
         previous->Next = newElement;
-        Element<T> *next = newElement->Next;
+        Element *next = newElement->Next;
         next->Prev = newElement;
         Size++;
     }
     if (index > Size / 2) {
-        Element<T> *next = this->tail;
+        Element *next = this->tail;
         for (int i = Size - 1; index < i; i--)
             next = next->Prev;
-        Element<T> *newElement = new Element<T>(data, next, next->Prev);
+        Element *newElement = new Element(data, next, next->Prev);
         next->Prev = newElement;
-        Element<T> *previous = newElement->Prev;
+        Element *previous = newElement->Prev;
         previous->Next = newElement;
         Size++;
     }
@@ -178,30 +200,31 @@ void twoList <T>::insert(T data, int index) {
 
 template <typename T>
 void twoList <T>::erase(int index) {
+    if ((index < 0)||(index >= Size)) throw std::out_of_range("index is more then size of two list or will be positive number");
     if (index == 0) pop_front();
     else if (index == Size - 1) pop_back();
-    if (index <= Size / 2) {
-        Element<T> *previous = this->head;
-        for (int i = 0; i < index - 1; i++)
-            previous = previous->Next;
-        Element<T> *delElement = previous->Next;
-        previous->Next = delElement->Next;
-        Element<T> *next = delElement->Next;
-        delete delElement;
-        next->Prev = previous;
-        Size--;
-    }
-    if (index > Size / 2) {
-        Element<T> *next = this->tail;
-        for (int i = Size - 1; index + 1 < i; i--)
-            next = next->Prev;
-        Element<T> *delElement = next->Prev;
-        next->Prev = delElement->Prev;
-        Element<T> *previous = delElement->Prev;
-        delete delElement;
-        previous->Next = next;
-        Size--;
-    }
+        else if (index <= Size / 2) {
+            Element *previous = this->head;
+            for (int i = 0; i < index - 1; i++)
+                previous = previous->Next;
+            Element *delElement = previous->Next;
+            previous->Next = delElement->Next;
+            Element *next = delElement->Next;
+            delete delElement;
+            next->Prev = previous;
+            Size--;
+            }
+            else if (index > Size / 2) {
+                Element *next = this->tail;
+                for (int i = Size - 1; index + 1 < i; i--)
+                    next = next->Prev;
+                Element *delElement = next->Prev;
+                next->Prev = delElement->Prev;
+                Element *previous = delElement->Prev;
+                delete delElement;
+                previous->Next = next;
+                Size--;
+            }
 }
 
 template<typename T>
@@ -216,8 +239,8 @@ T *twoList<T>::end() {
 
 template<typename T>
 void twoList<T>::slijanie(twoList<T> &m, twoList<T> &m1) {
-    Element<T> *current1 = this->head;
-    Element<T> *current2 = m.head;
+    Element *current1 = this->head;
+    Element *current2 = m.head;
     while ((current1->Next != nullptr)&&(current2->Next != nullptr)) {
         if (current1->data <= current2->data) {
             m1.push_back(current1->data);
@@ -254,7 +277,7 @@ void twoList<T>::slijanie(twoList<T> &m, twoList<T> &m1) {
 
 template<typename T>
 void twoList<T>::razbienie(T k, twoList<T> &m1, twoList<T> &m2) {
-    Element<T> *current = this->head;
+    Element *current = this->head;
     while (current->Next != nullptr) {
         if (current->data < k) m1.push_back(current->data);
         else m2.push_back(current->data);
