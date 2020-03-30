@@ -1,6 +1,7 @@
 #ifndef LABA2_1_ONELIST_H
 #define LABA2_1_ONELIST_H
-
+#include <iostream>
+using namespace std;
 template<typename T>
 class oneList{
 private:

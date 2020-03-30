@@ -1,6 +1,7 @@
 #ifndef LABA2_1_TWOLIST_H
 #define LABA2_1_TWOLIST_H
-
+#include <iostream>
+using namespace std;
 template <typename T>
 class twoList {
 private:
@@ -122,6 +123,7 @@ void twoList<T>::clear() {
 
 template<typename T>
 void twoList<T>::display() {
+    cout << endl;
     Element *print = head;
     while (print->Next != nullptr) {
         cout << print->data << " ";

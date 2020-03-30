@@ -1,5 +1,7 @@
 #ifndef LABA2_1_RING_BUFFER_H
 #define LABA2_1_RING_BUFFER_H
+#include <iostream>
+using namespace std;
 template <typename T>
 class RingBuffer {
 private:
