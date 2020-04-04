@@ -7,17 +7,17 @@ class oneList{
 private:
     class Element {
     public:
-        Element * next { nullptr };
-        T data { 0 };
+        Element * next = nullptr;
+        T data = 0;
         Element(T data = T(), Element *next = nullptr) {
             this->data = data;
             this->next = next;
         }
     };
-    int Size;
-    Element *head;
+    int Size = 0;
+    Element *head = nullptr;
 public:
-    oneList();
+    oneList() = default;
     oneList(const std::initializer_list<T> &m);
     ~oneList();
     void display();
@@ -33,6 +33,7 @@ public:
     void slijanie(oneList<T> &m, oneList<T> &m1);
     void razbienie(T k, oneList<T> &m1, oneList<T> &m2);
     bool operator ==(const oneList<T> &m) {
+        if ((this->Size == 0)&&(m.Size == 0)) throw std::out_of_range("Lists are empty");
         if (this->Size == m.Size) {
             Element *current1 = this->head;
             Element *current2 = m.head;
@@ -52,6 +53,7 @@ public:
     };
 
     bool operator > (const oneList<T> &m) {
+        if ((this->Size == 0)&&(m.Size == 0)) throw std::out_of_range("Lists are empty");
         Element *current1 = this->head;
         Element *current2 = m.head;
         while ((current1->next != nullptr)&&(current2->next != nullptr)){
@@ -93,12 +95,6 @@ public:
 };
 
 template<typename T>
-oneList<T>::oneList() {
-    Size = 0;
-    head = nullptr;
-}
-
-template<typename T>
 oneList<T>::oneList(const std::initializer_list<T> &m) {
     for (int i = 0; i < m.size();i++){
         push_back(m.begin()[i]);
@@ -108,6 +104,7 @@ oneList<T>::oneList(const std::initializer_list<T> &m) {
 template<typename T>
 oneList<T>::~oneList() {
     clear();
+    head = nullptr;
 }
 
 template<typename T>
@@ -218,42 +215,47 @@ void oneList<T>::display() {
 
 template<typename T>
 void oneList<T>::slijanie(oneList<T> &m,oneList<T> &m1) {
-    Element *current1 = this->head;
-    Element *current2 = m.head;
-    while ((current1->next != nullptr)&&(current2->next != nullptr)) {
+    Element *current1 = m.head;
+    Element *current2 = m1.head;
+    while ((current1->next != nullptr)||(current2->next != nullptr)) {
         if (current1->data <= current2->data) {
-            m1.push_back(current1->data);
-            current1 = current1->next;
+            this->push_back(current1->data);
+            if (current1->next != nullptr)
+                current1 = current1->next;
+            else break;
         }
         if (current2->data < current1->data) {
-            m1.push_back(current2->data);
-            current2 = current2->next;
+            this->push_back(current2->data);
+            if (current2->next != nullptr)
+                current2 = current2->next;
+            else break;
         }
     }
+
     if (current1->data <= current2->data) {
-        m1.push_back(current1->data);
-        m1.push_back(current2->data);
+        this->push_back(current1->data);
+        this->push_back(current2->data);
     }
     else {
-        m1.push_back(current2->data);
-        m1.push_back(current1->data);
+        this->push_back(current2->data);
+        this->push_back(current1->data);
     }
 
     if ((current1->next == nullptr)&&(current2->next != nullptr)) {
         do {
             current2 = current2->next;
-            m1.push_back(current2->data);
+            this->push_back(current2->data);
         } while (current2->next != nullptr);
     }
 
     if ((current2->next == nullptr)&&(current1->next != nullptr)) {
         do{
             current1 = current1->next;
-            m1.push_back(current1->data);
+            this->push_back(current1->data);
         } while (current1->next != nullptr);
     }
-    this->clear();
     m.clear();
+    m1.clear();
 }
 
 template<typename T>
