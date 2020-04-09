@@ -7,16 +7,13 @@ class RingBuffer {
 private:
     class Element {
     public:
-        T data = 0;
-        Element *Next = nullptr;
-        Element (T data = T(), Element *Next = nullptr) {
-            this->data = data;
-            this->Next = Next;
-        }
+        T data { 0 };
+        Element *Next { nullptr };
+        explicit Element (T value = T(), Element *next = nullptr) : data { value }, Next { next } {}
     };
-    Element *head = nullptr;
-    Element *tail = nullptr;
-    int Size = 0;
+    Element *head { nullptr };
+    Element *tail { nullptr };
+    int Size { 0 };
     int maxSize;
 public:
     explicit RingBuffer(int nSize);
@@ -29,10 +26,9 @@ public:
     T* begin();
     T* end();
     int count() { return Size; }// получить количество елементов в списке
-    void slijanie(RingBuffer<T> &m, RingBuffer<T> &m1);
-    void razbienie(T k, RingBuffer<T> &m1, RingBuffer<T> &m2);
+    void slijanie(RingBuffer<T> &List1, RingBuffer<T> &List2);
+    void razbienie(T k, RingBuffer<T> &rezult1, RingBuffer<T> &rezult2);
 
-    void clear();
     bool operator ==(const RingBuffer<T> &m) {
         if ((this->Size == 0)&&(m.Size == 0)) throw std::out_of_range("RingBuffers are empty");
         if (this->Size == m.Size) {
@@ -57,14 +53,18 @@ public:
         if ((this->Size == 0)&&(m.Size == 0)) throw std::out_of_range("RingBuffers are empty");
         Element *current1 = this->head;
         Element *current2 = m.head;
+        T value1 = current1->data;
+        T value2 = current2->data;
         while ((current1->Next != this->tail)&&(current2->Next != m.tail)){
-            if (current1->data < current2->data) return false;
-            if (current1->data > current2->data) return true;
+            if (value1 < value2) return false;
+            if (value1 > value2) return true;
             current1 = current1->Next;
             current2 = current2->Next;
+            value1 = current1->data;
+            value2 = current2->data;
         }
-        if (current1->data < current2->data) return false;
-        if (current1->data > current2->data) return true;
+        if (value1 < value2) return false;
+        if (value1 >  value2) return true;
         return (this->Size > m.Size);
     };
 
@@ -127,11 +127,11 @@ template<typename T>
 RingBuffer<T>::~RingBuffer() {
     Element *current = head;
     Element *del = nullptr;
-    while (Size > 0){
+    while (maxSize > 0){
         del = current;
         current = current->Next;
         delete del;
-        Size--;
+        maxSize--;
     }
     head = nullptr;
     tail = nullptr;
@@ -186,54 +186,48 @@ T *RingBuffer<T>::end() {
 }
 
 template<typename T>
-void RingBuffer<T>::slijanie(RingBuffer<T> &m, RingBuffer<T> &m1) {
-    Element *current1 = m.head;
-    Element *current2 = m1.head;
+void RingBuffer<T>::slijanie(RingBuffer<T> &List1, RingBuffer<T> &List2) {
+    Element *current1 = List1.head;
+    Element *current2 = List2.head;
     int k1 = 0;
     int k2 = 0;
-    while ((k1 != m.Size)||(k2 != m1.Size)) {
+    while ((k1 != List1.Size)&&(k2 != List2.Size)) {
         if (current1->data <= current2->data) {
-            if (k1 != m.Size) {
-                this->push_back(current1->data);
-                current1 = current1->Next;
-                k1++;
-            }
-            else break;
+            this->push_back(current1->data);
+            k1++;
+            if (k1 != List1.Size) current1 = current1->Next;
         }
         if (current2->data < current1->data) {
-            if (k2 != m1.Size){
-                this->push_back(current2->data);
-                current2 = current2->Next;
-                k2++;
-            }
-            else break;
+            this->push_back(current2->data);
+            k2++;
+            if (k2 != List2.Size) current2 = current2->Next;
         }
     }
 
-    if ((k1 == m.Size)&&(k2 != m1.Size)) {
-        do {
+    if ((k1 == List1.Size)&&(k2 != List2.Size)) {
+        while (k2 != List2.Size) {
             this->push_back(current2->data);
-            current2 = current2->Next;
             k2++;
-        } while (k2 != m1.Size);
+            if (k2 != List2.Size) current2 = current2->Next;
+        }
     }
 
-    if ((k2 == m1.Size)&&(k1 != m.Size)) {
-        do{
+    if ((k2 == List2.Size)&&(k1 != List1.Size)) {
+        while (k1 != List1.Size) {
             this->push_back(current1->data);
-            current1 = current1->Next;
             k1++;
-        } while (k1 != m.Size);
+            if (k1 != List1.Size) current1 = current1->Next;
+        }
     }
 }
 
 template<typename T>
-void RingBuffer<T>::razbienie(T k, RingBuffer<T> &m1, RingBuffer<T> &m2) {
+void RingBuffer<T>::razbienie(T k, RingBuffer<T> &rezult1, RingBuffer<T> &rezult2) {
     Element *current = this->head;
     int l = 0;
     while (l != this->Size) {
-        if (current->data < k) m1.push_back(current->data);
-        else m2.push_back(current->data);
+        if (current->data < k) rezult1.push_back(current->data);
+        else rezult2.push_back(current->data);
         current = current->Next;
         l++;
     }
