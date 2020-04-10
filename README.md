@@ -17,6 +17,10 @@ Implementation of general tree and binary search tree.
 
 Implementation of map and hash-table.
 
+## lab_05
+
+Comparison of implemented data structures.
+
 
 What we will be do:
 
