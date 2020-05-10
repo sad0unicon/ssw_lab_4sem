@@ -21,6 +21,10 @@ Implementation of map and hash-table.
 
 Comparison of implemented data structures.
 
+## lab_06 
+
+Implementation of scanner of arithmetical expression. 
+
 
 What we will be do:
 
