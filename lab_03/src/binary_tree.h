@@ -17,8 +17,8 @@ private:
         ~Element() = default;
     };
     Element* root { nullptr };
-    vector<T> z;
-    vector<int> p;
+    vector<T> elements_tree;
+    vector<int> visota;
     int Size { 0 };
 
     void DeleteElements (Element* elm) {
@@ -33,7 +33,7 @@ private:
 
     Element* pushElement(Element* elm, T d) {
         if (elm == nullptr) {
-            z.push_back(d);
+            elements_tree.push_back(d);
             elm = new Element(d);
             return elm;
         }
@@ -52,9 +52,9 @@ private:
         if (node == nullptr) return node;
         if (d == node->data && node->Right == nullptr && node->Left == nullptr) {
             delete node;
-            for (int i = 0; i < z.size(); i++)
-                if (d == z[i]) {
-                    z.erase(z.begin()+i);
+            for (int i = 0; i < elements_tree.size(); i++)
+                if (d == elements_tree[i]) {
+                    elements_tree.erase(elements_tree.begin()+i);
                     break;
                 }
             return nullptr;
@@ -233,29 +233,29 @@ public:
     }
 
     int height(){
-        if ( Size == 0 ) throw std::out_of_range("tree is empty");
-        if ( Size == 1 ) return 0;
+        if (Size == 0) throw std::out_of_range("tree is empty");
+        if (Size == 1) return 0;
         return heightElement(root);
     }
 
     vector<int> path (T d){
         if (Size == 0) throw std::out_of_range ("tree is empty");
-        p.clear();
+        visota.clear();
         int i = 0;
-        Element* elem = root;
-        while (elem != nullptr){
-            if (d < elem->data)
-                elem = current->Left;
-            else if (d > elem->data)
-                elem = elem->Right;
+        Element* elm = root;
+        while (elm != nullptr){
+            if (d < elm->data)
+                elm = elm->Left;
+            else if (d > elm->data)
+                elm = elm->Right;
             else {
-                p.push_back(i);
-                elem = elem->Right;
+                visota.push_back(i);
+                elm = elm->Right;
             }
             i++;
         }
-        if p.empty() throw std::out_of_range("tree is haven't this element");
-        return p;
+        if visota.empty() throw std::out_of_range("tree is haven't this element");
+        return visota;
     }
 
     void print() {
@@ -268,17 +268,17 @@ public:
     void double_pop(){
         if (Size == 0) throw std::out_of_range ("tree is empty");
         vector<int> it;
-        for (int i = 0; i < z.size(); i++)
-            for (int j = i; j < z.size(); j++)
-                if (i != j && z[i] == z[j]) {
-                    root = DeleteElement(root, z[i]);
+        for (int i = 0; i < elements_tree.size(); i++)
+            for (int j = i; j < elements_tree.size(); j++)
+                if (i != j && elements_tree[i] == elements_tree[j]) {
+                    root = DeleteElement(root, elements_tree[i]);
                     root = BalanceEntireTree(root);
-                    root = DeleteElement(root, z[i]);
+                    root = DeleteElement(root, elements_tree[i]);
                     root = BalanceEntireTree(root);
                     it.push_back(i);
                 }
         for (int i = it.size() - 1; i >= 0; i--)
-            z.erase(z.begin()+it[i]);
+            elements_tree.erase(elements_tree.begin()+it[i]);
         it.clear();
 
     }
@@ -287,9 +287,9 @@ public:
         if (Size == 0) throw std::out_of_range ("tree is empty");
         root = DeleteElement(root, data);
         root = BalanceEntireTree(root);
-        for (int i = 0; i < z.size(); i++)
-            if (data == z[i]) {
-                z.erase(z.begin()+i);
+        for (int i = 0; i < elements_tree.size(); i++)
+            if (data == elements_tree[i]) {
+                elements_tree.erase(elements_tree.begin()+i);
                 break;
             }
     }

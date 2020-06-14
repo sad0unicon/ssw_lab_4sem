@@ -18,7 +18,7 @@ private:
         ~Element() = default;
     };
     Element* root { nullptr };
-    vector<T> z;
+    vector<T> elements_tree;
     vector<int> it;
     int Size { 0 };
     vector<Element*> Elem;
@@ -35,9 +35,9 @@ private:
     void DeleteListok(Element* elm, Element* poisk) {
         for (int i = 0; i < elm->Subtrees.size();i++){
             if (elm->Subtrees.begin()[i] == poisk) {
-                for (int i = 0; i < z.size(); i++)
-                    if (poisk->data == z[i]) {
-                        z.erase(z.begin()+i);
+                for (int i = 0; i < elements_tree.size(); i++)
+                    if (poisk->data == elements_tree[i]) {
+                        elements_tree.erase(elements_tree.begin()+i);
                         break;
                     }
                 elm->Subtrees.erase(elm->Subtrees.begin() + i);
@@ -169,7 +169,7 @@ public:
     }
 
     void push(Element* p, T data) {
-        z.push_back(data);
+        elements_tree.push_back(data);
         if (root == nullptr) root = new Element (data);
         else p->Subtrees.push_back(new Element(data));
         Size++;
@@ -217,9 +217,9 @@ public:
     void double_pop(){
         if (Size == 0) throw std::out_of_range("tree is empty");
         vector<T> k;
-        for (int i = 0; i < z.size(); i++)
-            k.push_back(z[i]);
-        z.clear();
+        for (int i = 0; i < elements_tree.size(); i++)
+            k.push_back(elements_tree[i]);
+        elements_tree.clear();
         for (int i = 0; i < k.size(); i++) {
             for (int j = i; j < k.size(); j++)
                 if (i != j && k[i] == k[j])
@@ -233,7 +233,7 @@ public:
         for (int i = 0; i < k.size(); i++){
             for (int j = it.size() - 1; j >= 0; j--)
                 if (k[i] != k[it[j]])
-                    z.push_back(k[i]);
+                    elements_tree.push_back(k[i]);
         }
         k.clear();
         it.clear();
@@ -242,9 +242,9 @@ public:
     void erase(Element* elm) {
         if (Size == 0) throw std::out_of_range("tree is empty");
         DeleteElement(root, elm);
-        for (int i = 0; i < z.size(); i++)
-            if (elm->data == z[i]) {
-                z.erase(z.begin()+i);
+        for (int i = 0; i < elements_tree.size(); i++)
+            if (elm->data == elements_tree[i]) {
+                elements_tree.erase(elements_tree.begin()+i);
                 break;
             }
     }
