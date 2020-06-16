@@ -57,6 +57,7 @@ private:
                     elements_tree.erase(elements_tree.begin()+i);
                     break;
                 }
+            Size--;
             return nullptr;
         }
         else if(d < node->data) node->Left  = DeleteListok(node->Left, d);
@@ -104,6 +105,7 @@ private:
         elm->Left = BalanceEntireTree(elm->Left);
         elm->Right = BalanceEntireTree(elm->Right);
         elm = BalanceTree(elm);
+        return elm;
     }
 
     Element* right_rotate(Element* elm) {
@@ -126,6 +128,7 @@ private:
         if (d == node->data){
             if(node->Right== nullptr && node->Left == nullptr) {
                 delete node;
+                Size--;
                 return nullptr;
             }
             Element* tmp;
@@ -150,6 +153,7 @@ private:
                 }
             }
             delete node;
+            Size--;
             return tmp;
         }
         else if(d < node->data) node->Left  = DeleteElement(node->Left, d);
@@ -235,7 +239,7 @@ public:
     int height(){
         if (Size == 0) throw std::out_of_range("tree is empty");
         if (Size == 1) return 0;
-        return heightElement(root);
+        return heightElement(root) - 1;
     }
 
     vector<int> path (T d){
@@ -254,7 +258,7 @@ public:
             }
             i++;
         }
-        if visota.empty() throw std::out_of_range("tree is haven't this element");
+        if (visota.empty()) throw std::out_of_range("tree is haven't this element");
         return visota;
     }
 

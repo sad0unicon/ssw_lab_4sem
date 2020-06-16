@@ -29,6 +29,7 @@ private:
             for (int i = 0; i < elm->Subtrees.size(); i++)
                 DeleteElements(elm->Subtrees.begin()[i]);
             elm->Subtrees.clear();
+            delete elm;
         }
     }
 
@@ -141,10 +142,9 @@ private:
     }
 
     bool Bolshe(Element* b1,Element* b2) {
-        if (b1->Subtrees.size() < b2->Subtrees.size())
-            return false;
         bool bol = true;
         if (b1->data > b2->data) return true;
+        cout << "sdffa";
         if (b1->data < b2->data) return false;
         bol = (b1->data == b2->data);
         if (bol)
